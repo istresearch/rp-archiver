@@ -15,6 +15,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type UTCLogFormatter struct {
+	logrus.Formatter
+}
+
+func (u UTCLogFormatter) Format(e *logrus.Entry) ([]byte, error) {
+	e.Time = e.Time.UTC()
+	return u.Formatter.Format(e)
+}
+
 func main() {
 	config := archiver.NewConfig()
 	loader := ezconf.NewLoader(&config, "archiver", "Archives RapidPro runs and msgs to S3", []string{"archiver.toml"})
@@ -26,7 +35,14 @@ func main() {
 
 	// configure our logger
 	logrus.SetOutput(os.Stdout)
-	logrus.SetFormatter(&logrus.TextFormatter{})
+	logrus.SetFormatter(UTCLogFormatter{&logrus.JSONFormatter{
+		TimestampFormat: "2006-01-02T15:04:05.000Z",
+		FieldMap: logrus.FieldMap{
+			logrus.FieldKeyTime:  "timestamp",
+			logrus.FieldKeyLevel: "level",
+			logrus.FieldKeyMsg:   "message",
+		},
+	}})
 
 	level, err := logrus.ParseLevel(config.LogLevel)
 	if err != nil {
