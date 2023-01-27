@@ -18,3 +18,6 @@ dist/
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 fabric
+.idea/php.xml
+
+.idea/jpa-buddy.xml
