@@ -51,12 +51,12 @@ jobs:
       K8S_CONTAINER: pulse-engage-archiver
       SLACK_DEPLOY_MSG:
     steps:
-      - name: Trigger Container Build
+      - name: Trigger Container Build and Deploy
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.CI_WEBHOOK_TOKEN }}
-          repository: istresearch/rp-docker
-          event-type: trigger-build-repo
+          repository: istresearch/ci-docker
+          event-type: build-repo-dev-deploy
           client-payload: |-
             {
               "repo": "${{ github.repository }}",
