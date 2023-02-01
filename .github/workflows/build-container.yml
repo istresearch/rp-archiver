@@ -65,7 +65,7 @@ jobs:
                 "dockerfile": "Dockerfile",
                 "name": "${{ github.repository }}",
                 "tag": "${{ needs.build_cfg.outputs.VERSION_STR }}",
-                "build_args": []
+                "build_args": ["HAM=1","CHEESE=swiss"]
               },
               "deployment": {
                 "k8s_project": "${{ env.K8S_PROJECT }}",
