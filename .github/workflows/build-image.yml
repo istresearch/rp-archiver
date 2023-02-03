@@ -9,8 +9,25 @@ on:
       - 'v*'
 
 jobs:
+  build_cfg:
+    runs-on: ubuntu-latest
+    environment: default
+    outputs:
+      VERSION_STR: ${{ steps.config_step.outputs.VERSION_STR }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "Determine Version"
+        id: config_step
+        run: |-
+          VERSION_STR=`cat VERSION`          
+          echo "::notice::Version STR=${VERSION_STR}"
+          echo "VERSION_STR=${VERSION_STR}" >> $GITHUB_OUTPUT
+  #endjob build_cfg
+
   trigger-build:
     runs-on: ubuntu-latest
+    needs: [build_cfg]
     environment: default
     env:
       K8S_PROJECT: pulse-engage-archiver
@@ -33,7 +50,7 @@ jobs:
               "image": {
                 "dockerfile": "Dockerfile",
                 "name": "${{ github.repository }}",
-                "get_version_bash": "cat VERSION",
+                "version": "${{ needs.build_cfg.outputs.VERSION_STR }}",
                 "build_args": [
                 ]
               },
