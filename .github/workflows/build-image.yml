@@ -42,6 +42,11 @@ jobs:
                 "k8s_project": "${{ env.K8S_PROJECT }}",
                 "k8s_container": "${{ env.K8S_CONTAINER }}",
                 "deploy_msg": "${{ env.SLACK_DEPLOY_MSG }}"
+              },
+              "callback": {
+                "repository": "${{ github.repository }}",
+                "event_type": "build_image_result",
+                "error_type": "build_image_error",
               }
             }
   #endjob trigger-build
