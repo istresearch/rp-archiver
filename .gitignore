@@ -1,5 +1,4 @@
 # Binaries for programs and plugins
-rp-archiver
 *.exe
 *.exe~
 *.dll
@@ -17,7 +16,8 @@ dist/
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-fabric
-.idea/php.xml
+deploy
+fabfile.py
 
-.idea/jpa-buddy.xml
+.idea
+_*
