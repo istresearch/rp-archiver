@@ -20,4 +20,5 @@ deploy
 fabfile.py
 
 .idea
-_*
+_*/
+.v/
